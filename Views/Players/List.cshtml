@@ -1,0 +1,30 @@
+@model List<examenparcialjj.Models.Player>
+
+@{
+    ViewData["Title"] = "Lista de Jugadores";
+}
+
+<h1>Lista de Jugadores</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Posición</th>
+            <th>Equipo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>@player.Nombre</td>
+                <td>@player.Edad</td>
+                <td>@player.Posicion</td>
+                <td>@player.Team?.Nombre</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
