@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using examenparcialjj.Data;
+using examenparcialjj.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,33 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    if (!db.Teams.Any())
+    {
+        db.Teams.AddRange(
+            new Team { Nombre = "Alianza Lima" },
+            new Team { Nombre = "Universitario de Deportes" },
+            new Team { Nombre = "Sporting Cristal" },
+            new Team { Nombre = "Melgar" },
+            new Team { Nombre = "Cienciano" },
+            new Team { Nombre = "Sport Boys" },
+            new Team { Nombre = "Carlos A. Mannucci" },
+            new Team { Nombre = "UTC" },
+            new Team { Nombre = "Binacional" },
+            new Team { Nombre = "Cusco FC" },
+            new Team { Nombre = "Alianza Atlético" },
+            new Team { Nombre = "Atlético Grau" },
+            new Team { Nombre = "Sport Huancayo" },
+            new Team { Nombre = "Comerciantes Unidos" },
+            new Team { Nombre = "Deportivo Garcilaso" }
+        );
+        db.SaveChanges();
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,7 +65,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Players}/{action=Create}/{id?}");
 app.MapRazorPages();
 
 app.Run();
