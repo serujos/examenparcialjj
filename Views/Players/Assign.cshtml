@@ -1,0 +1,28 @@
+@model examenparcialjj.Models.Player
+
+@{
+    ViewData["Title"] = "Asignar Jugador a Equipo";
+    var teams = ViewBag.Teams as List<examenparcialjj.Models.Team>;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Assign" asp-route-id="@Model.Id" method="post">
+    <div class="form-group">
+        <label>Jugador:</label>
+        <input type="text" class="form-control" value="@Model.Nombre" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="teamId">Selecciona un equipo</label>
+        <select name="teamId" class="form-control" required>
+            <option value="">-- Selecciona --</option>
+            @foreach (var team in teams)
+            {
+                <option value="@team.Id">@team.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Asignar</button>
+</form>
